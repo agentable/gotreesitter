@@ -7,6 +7,12 @@ for tags and release notes while still in `0.x`.
 
 ## [Unreleased]
 
+## [0.20.9] - 2026-07-02
+
+Patch release recovering C# large-namespace method/type declarations and the
+Swift ternary/conditional operator, both via post-parse source recovery
+passes, plus a CI stability fix for the new C# recovery test under `-race`.
+
 ### Fixed
 
 - Large C# files whose class body is shredded by a cumulative GLR failure (e.g.
@@ -22,7 +28,7 @@ for tags and release notes while still in `0.x`.
   Each reparse is a single small snippet capped by size and count and honors the
   parser timeout, so the anti-OOM guarantees from #64/#98/#106 are preserved and
   the whole-file 4096-byte gate is unchanged. `JsonTextReader.cs` now recovers 68
-  methods (was 0) and `JsonReader.cs` 41 (was 0) (#136).
+  methods (was 0) and `JsonReader.cs` 41 (was 0). Thanks @richardwooding (#136, #138).
 - Swift ternary/conditional operator (`cond ? a : b`) now recovers instead of
   dropping `? a : b` into an `ERROR` node in every position. The runtime Swift
   blob never fired the `ternary_expression` reduction, so any function containing
@@ -32,7 +38,18 @@ for tags and release notes while still in `0.x`.
   `? if_true : if_false` tail blanked so the condition parses in place, then
   splicing a synthesised node with the upstream `condition`/`if_true`/`if_false`
   layout. The rewrite is accepted only when the result is error-free and
-  byte-faithful, so non-ternary code is never affected (#135).
+  byte-faithful, so non-ternary code is never affected. Thanks @richardwooding
+  (#135, #137).
+
+### CI
+
+- `TestCSharpLargeShreddedNamespaceRecoversMethods` now skips under `go test
+  -race`: the per-member bounded recovery reparses each class member as its
+  own small GLR parse, which normally finishes well inside the parser's
+  timeout budget, but race-detector instrumentation slows the same work enough
+  to trip the parser's internal wall-clock timeout. Non-race coverage keeps
+  the full recovery assertions; mirrors the existing Scala realworld-recovery
+  `-race` skip.
 
 ## [0.20.8] - 2026-07-01
 
