@@ -336,7 +336,7 @@ func TestInferredTagsQueryCoverage(t *testing.T) {
 	}
 }
 
-func TestInferredGoTagsQuerySkipsReturnTypes(t *testing.T) {
+func TestInferredGoTagsQueryCapturesDeclarations(t *testing.T) {
 	entry := DetectLanguageByName("go")
 	if entry == nil {
 		t.Fatal("expected go language entry")
@@ -362,16 +362,29 @@ func levelFromKind(kind string) int {
 func InitDB() error {
 	return nil
 }
+
+type Server struct{}
+
+type Validator interface {
+	Validate() error
+}
 `)
 	tags := tagger.Tag(src)
 	var functions []string
+	var types []string
 	for _, tag := range tags {
-		if tag.Kind == "definition.function" {
+		switch tag.Kind {
+		case "definition.function":
 			functions = append(functions, tag.Name)
+		case "definition.type":
+			types = append(types, tag.Name)
 		}
 	}
 	if got, want := strings.Join(functions, ","), "levelFromKind,InitDB"; got != want {
 		t.Fatalf("definition.function names = %q, want %q; tags=%+v", got, want, tags)
+	}
+	if got, want := strings.Join(types, ","), "Server,Validator"; got != want {
+		t.Fatalf("definition.type names = %q, want %q; tags=%+v", got, want, tags)
 	}
 }
 
