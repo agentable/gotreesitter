@@ -219,6 +219,20 @@ load "ignored.rb"
 	assertImportRef(t, refs[1], "ruby", "require", "json", "json", "")
 }
 
+func TestExtractImportsPHP(t *testing.T) {
+	source := []byte(`<?php
+require "helper.php";
+require_once 'setup.php';
+include $dynamic;
+`)
+	refs := extractImportsFromTree(t, grammars.PhpLanguage(), source)
+	if got, want := len(refs), 2; got != want {
+		t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+	}
+	assertImportRef(t, refs[0], "php", "require", "helper.php", "php", "")
+	assertImportRef(t, refs[1], "php", "require_once", "setup.php", "php", "")
+}
+
 func TestExtractImportsCAndCPP(t *testing.T) {
 	for _, filename := range []string{"main.c", "main.cpp"} {
 		t.Run(filename, func(t *testing.T) {

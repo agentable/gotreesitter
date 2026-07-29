@@ -460,6 +460,40 @@ end
 	}
 }
 
+func TestInferredPHPTagsQueryCapturesFunctionsAndCalls(t *testing.T) {
+	entry := DetectLanguageByName("php")
+	if entry == nil {
+		t.Fatal("expected PHP language entry")
+	}
+	tagger, err := gotreesitter.NewTagger(entry.Language(), ResolveTagsQuery(*entry))
+	if err != nil {
+		t.Fatalf("NewTagger: %v", err)
+	}
+	tags := tagger.Tag([]byte(`<?php
+function benchmark_php_leaf() {
+    return "leaf";
+}
+function benchmark_php_run() {
+    return benchmark_php_leaf();
+}
+`))
+	var definitions, calls []string
+	for _, tag := range tags {
+		switch tag.Kind {
+		case "definition.function":
+			definitions = append(definitions, tag.Name)
+		case "reference.call":
+			calls = append(calls, tag.Name)
+		}
+	}
+	if got, want := strings.Join(definitions, ","), "benchmark_php_leaf,benchmark_php_run"; got != want {
+		t.Fatalf("definition.function names = %q, want %q; tags=%+v", got, want, tags)
+	}
+	if got, want := strings.Join(calls, ","), "benchmark_php_leaf"; got != want {
+		t.Fatalf("reference.call names = %q, want %q; tags=%+v", got, want, tags)
+	}
+}
+
 func TestInferredCTagsQueryCapturesPointerReturnFunction(t *testing.T) {
 	entry := DetectLanguageByName("c")
 	if entry == nil {

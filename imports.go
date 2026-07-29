@@ -65,6 +65,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractKotlinImportNode(n, lang, source, &refs)
 		case "ruby":
 			return extractRubyRequireNode(n, lang, source, &refs)
+		case "php":
+			return extractPHPIncludeNode(n, lang, source, &refs)
 		case "javascript", "typescript", "tsx":
 			return extractEcmascriptImportNode(n, lang, source, &refs)
 		case "python":
@@ -80,6 +82,38 @@ func ExtractImports(tree *Tree) []ImportRef {
 		}
 	})
 	return refs
+}
+
+func extractPHPIncludeNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+	refs *[]ImportRef,
+) bool {
+	nodeType := n.Type(lang)
+	kind := strings.TrimSuffix(nodeType, "_expression")
+	switch kind {
+	case "require", "require_once", "include", "include_once":
+	default:
+		return true
+	}
+	argument := firstDescendantByType(n, lang, "string", "encapsed_string")
+	if argument == nil {
+		return false
+	}
+	path := importStringLiteralText(argument.Text(source))
+	if path == "" {
+		return false
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      lang.Name,
+		Kind:      kind,
+		Path:      path,
+		Name:      lastDottedName(path),
+		StartByte: n.StartByte(),
+		EndByte:   n.EndByte(),
+	})
+	return false
 }
 
 func extractRubyRequireNode(

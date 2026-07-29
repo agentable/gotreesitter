@@ -40,6 +40,10 @@ var inferredTagsQueryOverrides = map[string]string{
 		"(program (method name: (identifier) @name) @definition.function)",
 		"(call method: (identifier) @name) @reference.call",
 	}, "\n"),
+	"php": strings.Join([]string{
+		"(function_definition name: (name) @name) @definition.function",
+		"(function_call_expression function: (name) @name) @reference.call",
+	}, "\n"),
 }
 
 var inferredTagsQueryPatterns = []tagsQueryPattern{
