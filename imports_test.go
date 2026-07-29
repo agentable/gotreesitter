@@ -72,6 +72,27 @@ import static java.util.Collections.*;
 	assertImportRefsEqualShape(t, sourceRefs, refs)
 }
 
+func TestExtractImportsKotlin(t *testing.T) {
+	source := []byte(`package benchmark.app
+
+import benchmark.helper.BenchmarkKotlinLeaf
+import benchmark.other.*
+import benchmark.alias.Original as Renamed
+`)
+	tree := parseUnderstandingTree(t, "main.kt", source)
+	defer tree.Release()
+	refs := gotreesitter.ExtractImports(tree)
+	if len(refs) != 4 {
+		t.Fatalf("ExtractImports len = %d, want 4: %#v", len(refs), refs)
+	}
+	assertImportRef(t, refs[0], "kotlin", "package", "benchmark.app", "app", "")
+	assertImportRef(t, refs[1], "kotlin", "import", "benchmark.helper.BenchmarkKotlinLeaf", "BenchmarkKotlinLeaf", "")
+	if refs[2].Path != "benchmark.other" || !refs[2].Wildcard {
+		t.Fatalf("wildcard import = %#v", refs[2])
+	}
+	assertImportRef(t, refs[3], "kotlin", "import", "benchmark.alias.Original", "Original", "Renamed")
+}
+
 func TestExtractImportsEcmascript(t *testing.T) {
 	tests := []struct {
 		name string

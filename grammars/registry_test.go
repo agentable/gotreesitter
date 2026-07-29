@@ -388,6 +388,37 @@ type Validator interface {
 	}
 }
 
+func TestInferredKotlinTagsQueryCapturesTopLevelFunctionsAndCalls(t *testing.T) {
+	entry := DetectLanguageByName("kotlin")
+	if entry == nil {
+		t.Fatal("expected Kotlin language entry")
+	}
+	query := ResolveTagsQuery(*entry)
+	tagger, err := gotreesitter.NewTagger(entry.Language(), query)
+	if err != nil {
+		t.Fatalf("NewTagger: %v", err)
+	}
+	tags := tagger.Tag([]byte(`
+fun BenchmarkKotlinLeaf() = "leaf"
+fun BenchmarkKotlinRun() = BenchmarkKotlinLeaf()
+`))
+	var definitions, calls []string
+	for _, tag := range tags {
+		switch tag.Kind {
+		case "definition.function":
+			definitions = append(definitions, tag.Name)
+		case "reference.call":
+			calls = append(calls, tag.Name)
+		}
+	}
+	if got, want := strings.Join(definitions, ","), "BenchmarkKotlinLeaf,BenchmarkKotlinRun"; got != want {
+		t.Fatalf("definition.function names = %q, want %q; tags=%+v", got, want, tags)
+	}
+	if got, want := strings.Join(calls, ","), "BenchmarkKotlinLeaf"; got != want {
+		t.Fatalf("reference.call names = %q, want %q; tags=%+v", got, want, tags)
+	}
+}
+
 func TestInferredCTagsQueryCapturesPointerReturnFunction(t *testing.T) {
 	entry := DetectLanguageByName("c")
 	if entry == nil {

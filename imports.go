@@ -61,6 +61,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractGoImportNode(n, lang, source, &refs)
 		case "java":
 			return extractJavaImportNode(n, lang, source, &refs)
+		case "kotlin":
+			return extractKotlinImportNode(n, lang, source, &refs)
 		case "javascript", "typescript", "tsx":
 			return extractEcmascriptImportNode(n, lang, source, &refs)
 		case "python":
@@ -76,6 +78,56 @@ func ExtractImports(tree *Tree) []ImportRef {
 		}
 	})
 	return refs
+}
+
+func extractKotlinImportNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+	refs *[]ImportRef,
+) bool {
+	kind := n.Type(lang)
+	if kind != "package_header" && kind != "import_header" {
+		return true
+	}
+	text := strings.TrimSpace(n.Text(source))
+	if kind == "package_header" {
+		path := strings.TrimSpace(strings.TrimPrefix(text, "package"))
+		if path != "" {
+			*refs = append(*refs, ImportRef{
+				Lang:      lang.Name,
+				Kind:      "package",
+				Path:      path,
+				Name:      lastDottedName(path),
+				StartByte: n.StartByte(),
+				EndByte:   n.EndByte(),
+			})
+		}
+		return false
+	}
+
+	declaration := strings.TrimSpace(strings.TrimPrefix(text, "import"))
+	path, alias := declaration, ""
+	if before, after, found := strings.Cut(declaration, " as "); found {
+		path = strings.TrimSpace(before)
+		alias = strings.TrimSpace(after)
+	}
+	wildcard := strings.HasSuffix(path, ".*")
+	path = strings.TrimSuffix(path, ".*")
+	if path == "" {
+		return false
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      lang.Name,
+		Kind:      "import",
+		Path:      path,
+		Name:      lastDottedName(path),
+		Alias:     alias,
+		Wildcard:  wildcard,
+		StartByte: n.StartByte(),
+		EndByte:   n.EndByte(),
+	})
+	return false
 }
 
 func extractCIncludeNode(

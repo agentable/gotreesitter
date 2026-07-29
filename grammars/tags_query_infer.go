@@ -32,6 +32,10 @@ var inferredTagsQueryOverrides = map[string]string{
 		"(call_expression function: (identifier) @name) @reference.call",
 		"(call_expression function: (selector_expression field: (field_identifier) @name)) @reference.call",
 	}, "\n"),
+	"kotlin": strings.Join([]string{
+		"(function_declaration (simple_identifier) @name) @definition.function",
+		"(call_expression (simple_identifier) @name) @reference.call",
+	}, "\n"),
 }
 
 var inferredTagsQueryPatterns = []tagsQueryPattern{
