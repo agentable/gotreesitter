@@ -129,6 +129,26 @@ function helper(): void {}
 	assertCallNames(t, calls, "helper")
 }
 
+func TestExtractDefinitionSpansAndCallsRust(t *testing.T) {
+	source := []byte(`pub struct Worker {}
+
+pub fn leaf() {}
+
+pub fn run() {
+    leaf();
+    crate::helper::leaf();
+}
+`)
+	tree := parseUnderstandingTree(t, "lib.rs", source)
+	defer tree.Release()
+
+	defs := gotreesitter.ExtractDefinitionSpans(tree)
+	assertDefinitionNames(t, defs, "Worker", "leaf", "run")
+
+	calls := gotreesitter.ExtractCalls(tree)
+	assertCallNames(t, calls, "leaf", "leaf")
+}
+
 func TestExtractExplicitInstantiations(t *testing.T) {
 	tests := []struct {
 		filename string

@@ -164,6 +164,24 @@ py_library(name = "lib")
 	assertImportRefsEqualShape(t, sourceRefs, refs)
 }
 
+func TestExtractImportsRust(t *testing.T) {
+	source := []byte(`mod helper;
+use crate::helper::leaf;
+use crate::helper::{other, Worker as RenamedWorker};
+`)
+	refs := extractImportsFromTree(t, grammars.RustLanguage(), source)
+	if got, want := len(refs), 4; got != want {
+		t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+	}
+	assertImportRef(t, refs[0], "rust", "module", "helper", "helper", "")
+	assertImportRef(t, refs[1], "rust", "use", "crate::helper::leaf", "leaf", "")
+	if refs[1].From != "crate::helper" {
+		t.Fatalf("use ref = %#v, want crate::helper source", refs[1])
+	}
+	assertImportRef(t, refs[2], "rust", "use", "crate::helper::other", "other", "")
+	assertImportRef(t, refs[3], "rust", "use", "crate::helper::Worker", "Worker", "RenamedWorker")
+}
+
 func TestExtractImportsSourceParityFixtures(t *testing.T) {
 	cases := []struct {
 		name   string

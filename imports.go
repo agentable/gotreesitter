@@ -67,6 +67,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractPythonImportNode(n, lang, source, &refs)
 		case "starlark":
 			return extractStarlarkImportNode(n, lang, source, &refs)
+		case "rust":
+			return extractRustImportNode(n, lang, source, &refs)
 		default:
 			return true
 		}
@@ -184,6 +186,94 @@ func goImportAlias(spec, pathNode *Node, lang *Language, source []byte) string {
 		}
 	}
 	return ""
+}
+
+func extractRustImportNode(n *Node, lang *Language, source []byte, refs *[]ImportRef) bool {
+	switch n.Type(lang) {
+	case "mod_item":
+		text := strings.TrimSpace(n.Text(source))
+		if !strings.HasSuffix(text, ";") {
+			return false
+		}
+		name := nodeFieldText(n, "name", lang, source)
+		if name == "" {
+			name = firstDescendantText(n, lang, source, "identifier")
+		}
+		if name != "" {
+			*refs = append(*refs, ImportRef{
+				Lang:      lang.Name,
+				Kind:      "module",
+				Path:      name,
+				Name:      name,
+				StartByte: n.StartByte(),
+				EndByte:   n.EndByte(),
+			})
+		}
+		return false
+	case "use_declaration":
+		text := strings.TrimSpace(n.Text(source))
+		text = strings.TrimSpace(strings.TrimSuffix(text, ";"))
+		text = strings.TrimSpace(strings.TrimPrefix(text, "use"))
+		appendRustUseRefs(lang.Name, text, n.StartByte(), n.EndByte(), refs)
+		return false
+	}
+	return true
+}
+
+func appendRustUseRefs(langName, declaration string, start, end uint32, refs *[]ImportRef) {
+	declaration = strings.TrimSpace(declaration)
+	if declaration == "" {
+		return
+	}
+	if open := strings.IndexByte(declaration, '{'); open >= 0 {
+		close := strings.LastIndexByte(declaration, '}')
+		if close <= open {
+			return
+		}
+		prefix := strings.TrimSuffix(strings.TrimSpace(declaration[:open]), "::")
+		for _, item := range splitImportList(declaration[open+1 : close]) {
+			item = strings.TrimSpace(item)
+			if item == "" {
+				continue
+			}
+			if prefix != "" && item != "self" {
+				item = prefix + "::" + item
+			} else if item == "self" {
+				item = prefix
+			}
+			appendRustUseRefs(langName, item, start, end, refs)
+		}
+		return
+	}
+
+	path, alias := declaration, ""
+	if before, after, ok := strings.Cut(declaration, " as "); ok {
+		path = strings.TrimSpace(before)
+		alias = strings.TrimSpace(after)
+	}
+	path = strings.Trim(path, ": ")
+	if path == "" {
+		return
+	}
+	name := path
+	if separator := strings.LastIndex(path, "::"); separator >= 0 {
+		name = path[separator+2:]
+	}
+	from := ""
+	if separator := strings.LastIndex(path, "::"); separator >= 0 {
+		from = path[:separator]
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      langName,
+		Kind:      "use",
+		Path:      path,
+		From:      from,
+		Name:      name,
+		Alias:     alias,
+		Wildcard:  name == "*",
+		StartByte: start,
+		EndByte:   end,
+	})
 }
 
 func extractGoImportsFromSourceWithReport(lang *Language, source []byte) ImportExtractResult {
