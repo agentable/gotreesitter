@@ -5,7 +5,7 @@ package cgoharness
 import (
 	"unicode/utf8"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func pointAtOffset(src []byte, offset int) gotreesitter.Point {

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestJavaSwitchDefaultLabelsDeepParity(t *testing.T) {

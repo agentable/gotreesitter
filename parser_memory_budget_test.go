@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 func TestParserMemoryBudgetStopsParse(t *testing.T) {

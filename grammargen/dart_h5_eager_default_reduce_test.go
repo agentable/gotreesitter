@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestDartH5EagerDefaultReduceParserProof(t *testing.T) {

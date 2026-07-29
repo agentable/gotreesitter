@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestParseFileCSizeofIdentifierKeepsExpressionBranch(t *testing.T) {

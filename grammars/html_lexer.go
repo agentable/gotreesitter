@@ -5,7 +5,7 @@ package grammars
 import (
 	"fmt"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // HTMLTokenSource is a lightweight lexer bridge for tree-sitter-html.

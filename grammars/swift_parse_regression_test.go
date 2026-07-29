@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestSwiftLineCommentsStayExtraComments(t *testing.T) {

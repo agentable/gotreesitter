@@ -5,9 +5,9 @@ package gotreesitter_test
 import (
 	"fmt"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
-	"github.com/odvcencio/gotreesitter/internal/benchfixtures"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter/internal/benchfixtures"
 )
 
 func init() {

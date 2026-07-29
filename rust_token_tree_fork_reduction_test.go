@@ -3,8 +3,8 @@ package gotreesitter_test
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // Macro-heavy Rust that drives the delim_token_tree_repeat1 (state 83) boundary

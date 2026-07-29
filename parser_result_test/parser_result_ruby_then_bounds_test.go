@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestRubyIfThenStartsAtConditionEnd(t *testing.T) {

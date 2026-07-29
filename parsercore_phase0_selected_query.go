@@ -5,7 +5,7 @@ package gotreesitter
 import (
 	"errors"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 var errSelectedStoreQueryMissingUnsupported = errors.New("selected-store query route does not support MISSING patterns")

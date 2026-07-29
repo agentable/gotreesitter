@@ -3,7 +3,7 @@ package grammars
 import (
 	"testing"
 
-	ts "github.com/odvcencio/gotreesitter"
+	ts "github.com/agentable/gotreesitter"
 )
 
 // TestElixirBooleanKeepsTrueTokenChildViaEngine proves that the reduce engine

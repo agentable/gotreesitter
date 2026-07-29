@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // TestCSharpExternalLexStatesRegression guards the c_sharp ExternalLexStates

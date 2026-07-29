@@ -6,7 +6,7 @@ import (
 	"testing"
 	_ "unsafe"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestUxntalScannerConsumesWhitespaceAndNestedComment(t *testing.T) {
@@ -70,8 +70,8 @@ func TestParseUxntalConsecutiveCommentsStaysCleanAndSingleStacked(t *testing.T) 
 	}
 }
 
-//go:linkname newUxntalExternalLexer github.com/odvcencio/gotreesitter.newExternalLexer
+//go:linkname newUxntalExternalLexer github.com/agentable/gotreesitter.newExternalLexer
 func newUxntalExternalLexer(source []byte, pos int, row, col uint32) *gotreesitter.ExternalLexer
 
-//go:linkname uxntalExternalLexerToken github.com/odvcencio/gotreesitter.(*ExternalLexer).token
+//go:linkname uxntalExternalLexerToken github.com/agentable/gotreesitter.(*ExternalLexer).token
 func uxntalExternalLexerToken(*gotreesitter.ExternalLexer) (gotreesitter.Token, bool)

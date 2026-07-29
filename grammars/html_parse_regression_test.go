@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func findHTMLElementStartingAt(root *gotreesitter.Node, lang *gotreesitter.Language, start uint32) *gotreesitter.Node {

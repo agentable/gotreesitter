@@ -5,7 +5,7 @@ package grammars
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // TestSchemeBackslashHashProducesErrorNode verifies that a token C rejects (a

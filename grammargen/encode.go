@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // Generate compiles a Grammar definition into a binary blob that

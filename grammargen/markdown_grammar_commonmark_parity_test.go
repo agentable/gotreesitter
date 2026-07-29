@@ -3,8 +3,8 @@ package grammargen
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // cmParityCase is one CommonMark §3-§6 construct probed for byte-identical CST

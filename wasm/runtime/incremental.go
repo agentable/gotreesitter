@@ -1,6 +1,6 @@
 package main
 
-import "github.com/odvcencio/gotreesitter"
+import "github.com/agentable/gotreesitter"
 
 // utf16EditBetween returns the smallest replacement that transforms oldSource
 // into newSource. Boundaries are widened when necessary so an edit never

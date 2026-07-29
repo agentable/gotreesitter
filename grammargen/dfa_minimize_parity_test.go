@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // TestLexMinimizeParityAcrossGrammars proves minimizeLexStates (see

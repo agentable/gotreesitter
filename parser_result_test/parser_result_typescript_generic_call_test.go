@@ -3,7 +3,7 @@ package parserresult_test
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestTSXPredefinedGenericCallParsesAsCallExpression(t *testing.T) {

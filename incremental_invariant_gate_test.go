@@ -55,8 +55,8 @@ import (
 	"sync"
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gts "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // incrGateCorpusEntry describes one curated corpus file swept by the gate.

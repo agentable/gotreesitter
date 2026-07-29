@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/odvcencio/gotreesitter/internal/benchfixtures"
+	"github.com/agentable/gotreesitter/internal/benchfixtures"
 	sitter "github.com/tree-sitter/go-tree-sitter"
 )
 

@@ -5,7 +5,7 @@ package grammars
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 const haskellSpanRetirementSource = "module M where\nimport A\nimport B\n\nvalue = 1"

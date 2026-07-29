@@ -3,7 +3,7 @@
 package grammars
 
 import (
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // TomlExternalScanner is a faithful port of tree-sitter-toml's src/scanner.c

@@ -11,6 +11,6 @@
 // dramatically smaller than the default all-grammars build.
 package main
 
-import _ "github.com/odvcencio/gotreesitter/grammars"
+import _ "github.com/agentable/gotreesitter/grammars"
 
 func main() {}

@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gts "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // TestForestNoNonTriviaRootGap is a SAFETY invariant: the forest fast path

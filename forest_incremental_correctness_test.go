@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gts "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // byteToPoint computes the (row, column) for a byte offset, matching the

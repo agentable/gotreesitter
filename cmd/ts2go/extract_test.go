@@ -1179,7 +1179,7 @@ func TestGenerateEmbeddedGo(t *testing.T) {
 	// Verify the generated code contains expected strings.
 	checks := []string{
 		"package testpkg",
-		`import "github.com/odvcencio/gotreesitter"`,
+		`import "github.com/agentable/gotreesitter"`,
 		"func TestLangLanguage()",
 		"*gotreesitter.Language",
 		`loadEmbeddedLanguage("test_lang.bin")`,

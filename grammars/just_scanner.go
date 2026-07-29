@@ -6,7 +6,7 @@ import (
 	"sync"
 	"unicode"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // External token indexes for the just grammar.

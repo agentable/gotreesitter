@@ -5,7 +5,7 @@ import (
 	"os"
 	"sync"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func bindExternalScannerSpec(lang *gotreesitter.Language, spec ExternalScannerSpec, setSymbol func(int, gotreesitter.Symbol)) []int {

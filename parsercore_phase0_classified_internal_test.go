@@ -6,7 +6,7 @@ import (
 	"testing"
 	"unsafe"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 func mustDiagnosticParserCoreGenericCell(t testing.TB, compact *core.Core, headerIndex int, header diagnosticParserCoreHeader, lookahead core.Symbol) diagnosticParserCoreGenericCell {

@@ -7,7 +7,7 @@ import (
 	"testing"
 	_ "unsafe"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestSQLScannerCheckpointRoundTrip(t *testing.T) {
@@ -69,5 +69,5 @@ func checkpointTagName(tag string) string {
 	return tag
 }
 
-//go:linkname newSQLExternalLexer github.com/odvcencio/gotreesitter.newExternalLexer
+//go:linkname newSQLExternalLexer github.com/agentable/gotreesitter.newExternalLexer
 func newSQLExternalLexer(source []byte, pos int, row, col uint32) *gotreesitter.ExternalLexer

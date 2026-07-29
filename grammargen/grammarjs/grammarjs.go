@@ -2,7 +2,7 @@
 // embedded JavaScript grammar. Blank-import it to enable
 // grammargen.ImportGrammarJS:
 //
-//	import _ "github.com/odvcencio/gotreesitter/grammargen/grammarjs"
+//	import _ "github.com/agentable/gotreesitter/grammargen/grammarjs"
 //
 // It is a separate package on purpose: importing grammargen alone no longer
 // pulls in the gotreesitter/grammars registry (~200 grammars, ~22MB). Only code
@@ -10,8 +10,8 @@
 package grammarjs
 
 import (
-	"github.com/odvcencio/gotreesitter/grammargen"
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter/grammargen"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 func init() {

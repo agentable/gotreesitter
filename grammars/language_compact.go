@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 var (

@@ -6,7 +6,7 @@ import (
 	"encoding/gob"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestRepairNoLookaheadLexModes(t *testing.T) {

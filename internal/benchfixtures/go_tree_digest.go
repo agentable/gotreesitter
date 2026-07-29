@@ -3,7 +3,7 @@ package benchfixtures
 import (
 	"fmt"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // InspectGoTree computes the shared digest and node-kind coverage in one

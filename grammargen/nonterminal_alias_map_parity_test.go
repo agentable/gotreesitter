@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // shippedGrammarBlobsDir is grammars/grammar_blobs, read directly from disk

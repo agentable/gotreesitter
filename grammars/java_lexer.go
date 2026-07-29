@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // JavaTokenSource is a lexer bridge for tree-sitter-java.

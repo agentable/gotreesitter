@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
+	gts "github.com/agentable/gotreesitter"
 )
 
 // TestAdmissionSwitchDefaultBuildFallsBackLoudly proves the fail-closed

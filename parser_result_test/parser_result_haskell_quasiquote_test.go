@@ -3,7 +3,7 @@ package parserresult_test
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestHaskellQuasiquoteIncludesOpeningBracket(t *testing.T) {

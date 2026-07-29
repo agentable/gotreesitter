@@ -173,8 +173,8 @@ func collectReleaseEvidence(input validationInput) (validationResult, error) {
 	}
 
 	notes, date, sectionPresent, notesPresent := extractVersionNotes(string(changelog), input.Version)
-	unreleasedLink := "[Unreleased]: https://github.com/odvcencio/gotreesitter/compare/" + input.Version + "...HEAD"
-	versionLink := "[" + strings.TrimPrefix(input.Version, "v") + "]: https://github.com/odvcencio/gotreesitter/compare/" +
+	unreleasedLink := "[Unreleased]: https://github.com/agentable/gotreesitter/compare/" + input.Version + "...HEAD"
+	versionLink := "[" + strings.TrimPrefix(input.Version, "v") + "]: https://github.com/agentable/gotreesitter/compare/" +
 		input.LatestTag + "..." + input.Version
 	receipt := strings.TrimSpace(input.ReceiptURI)
 

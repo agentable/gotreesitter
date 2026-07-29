@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"unicode/utf16"
 
-	"github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 type runtimeLanguage struct {

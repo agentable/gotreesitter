@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
-	"github.com/odvcencio/gotreesitter/internal/benchfixtures"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter/internal/benchfixtures"
 	sitter "github.com/tree-sitter/go-tree-sitter"
 )
 

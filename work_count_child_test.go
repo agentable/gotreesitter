@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 type workCountTaggedChildResult struct {

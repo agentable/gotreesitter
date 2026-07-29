@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 type dfaBenchmarkSpec struct {

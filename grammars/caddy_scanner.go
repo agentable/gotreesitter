@@ -2,7 +2,7 @@
 
 package grammars
 
-import gotreesitter "github.com/odvcencio/gotreesitter"
+import gotreesitter "github.com/agentable/gotreesitter"
 
 // External token indexes for the caddy grammar.
 const (

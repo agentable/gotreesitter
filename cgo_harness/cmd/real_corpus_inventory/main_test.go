@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter/cgo_harness/internal/realcorpus"
+	"github.com/agentable/gotreesitter/cgo_harness/internal/realcorpus"
 )
 
 func TestBuildInventoryUsesGrammarBlobsAsLanguageUniverse(t *testing.T) {

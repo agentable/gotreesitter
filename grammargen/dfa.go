@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // dfaState is a state in the deterministic finite automaton.

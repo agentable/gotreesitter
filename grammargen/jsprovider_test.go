@@ -1,7 +1,7 @@
 package grammargen
 
 import (
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // Register the JavaScript grammar provider for tests that exercise

@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/odvcencio/gotreesitter/cgo_harness/internal/realcorpus"
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter/cgo_harness/internal/realcorpus"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 const readinessUnmeasured = "unmeasured"

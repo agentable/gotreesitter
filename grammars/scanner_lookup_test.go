@@ -3,7 +3,7 @@ package grammars
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestLookupExternalScanner(t *testing.T) {

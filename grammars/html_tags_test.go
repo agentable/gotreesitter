@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
+	gts "github.com/agentable/gotreesitter"
 )
 
 func TestHTMLDeserializeTagsIntoReusesBackingArray(t *testing.T) {

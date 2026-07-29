@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"testing"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 // loadCertifiedGoLanguageForTest decodes the embedded certified Go blob into a

@@ -5,7 +5,7 @@ package gotreesitter
 import (
 	"testing"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 // TestCompactMaterializedFragileBitReachesPublicNode proves Phase-3 Lane 3

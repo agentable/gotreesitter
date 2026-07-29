@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/internal/benchfixtures"
+	"github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/internal/benchfixtures"
 )
 
 func TestCollapsedChildLedgerRealLanguagesNeedNoSafetyNetRewrite(t *testing.T) {

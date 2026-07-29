@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // TestCorpusTypeFailDiag investigates why Go parser produces error trees

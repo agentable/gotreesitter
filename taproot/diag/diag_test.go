@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter/taproot/diag"
+	"github.com/agentable/gotreesitter/taproot/diag"
 )
 
 func TestRenderQuotesLine(t *testing.T) {

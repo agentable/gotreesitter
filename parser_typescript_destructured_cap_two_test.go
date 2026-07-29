@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // typeScriptDestructuredArrowReturnTypeCapCompareShapes are the

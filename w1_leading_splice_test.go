@@ -27,8 +27,8 @@ import (
 	"strings"
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gts "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // leadingParseAt runs a single-byte edit of the given class at off and returns

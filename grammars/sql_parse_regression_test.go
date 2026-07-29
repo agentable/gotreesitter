@@ -3,7 +3,7 @@ package grammars
 import (
 	"testing"
 
-	ts "github.com/odvcencio/gotreesitter"
+	ts "github.com/agentable/gotreesitter"
 )
 
 func TestSQLTrailingCommaAtEOFRecoversStatementPrefix(t *testing.T) {

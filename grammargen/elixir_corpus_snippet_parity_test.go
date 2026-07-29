@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestElixirImportedCorpusSnippetParity(t *testing.T) {

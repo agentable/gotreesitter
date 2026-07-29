@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"slices"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // builtinLanguageRuntimeProfile contains narrow runtime decisions certified

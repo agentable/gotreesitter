@@ -16,9 +16,9 @@ import (
 	"fmt"
 	"sync"
 
-	gts "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammargen"
-	"github.com/odvcencio/gotreesitter/taproot/walk"
+	gts "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammargen"
+	"github.com/agentable/gotreesitter/taproot/walk"
 )
 
 // Walker is the CST cursor helper. It is re-exported from taproot/walk so

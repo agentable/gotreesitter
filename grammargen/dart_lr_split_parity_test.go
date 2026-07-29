@@ -3,7 +3,7 @@ package grammargen
 import (
 	"time"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func generateDartParityLanguageWithTimeout(gram *Grammar, timeout time.Duration) (*gotreesitter.Language, error) {

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 const grammargenBlobDirEnv = "GOTREESITTER_GRAMMARGEN_BLOB_DIR"

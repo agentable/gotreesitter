@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 // parserCoreFreshFullRunner owns the reusable state for the authenticated,

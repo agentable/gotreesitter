@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func ts2goMapBearingLanguage() *gotreesitter.Language {

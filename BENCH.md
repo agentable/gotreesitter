@@ -527,7 +527,7 @@ selected syntax, spans, points, fields, aliases/extras, EOF, and selected-node
 census match the locked oracle on the four clean fresh-UTF-8 fixtures. The only
 admitted grammar/scanner identity is the embedded Go blob with SHA-256
 `9cf914d26d962d1a62e7954f8b20b302337a44cb7d4a07218eec482c45a57a08`
-and the exact `github.com/odvcencio/gotreesitter/grammars.GoExternalScanner`
+and the exact `github.com/agentable/gotreesitter/grammars.GoExternalScanner`
 type. The route declines recovery or retry, incremental parsing, included
 ranges, closed-prefix operation, missing or no-lookahead tokens, repetition
 shifts, extra chains, and any EOF frontier other than one accepted head with

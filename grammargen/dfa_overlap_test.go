@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestBuildLexDFAPrefersLongerStringOverSingleCharPattern(t *testing.T) {

@@ -3,7 +3,7 @@ package grammars
 import (
 	"testing"
 
-	ts "github.com/odvcencio/gotreesitter"
+	ts "github.com/agentable/gotreesitter"
 )
 
 // TestOCamlCollapsedNamedLeafChildrenNativeRetiredDispatchArm is the R2

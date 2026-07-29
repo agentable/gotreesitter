@@ -5,7 +5,7 @@ package grammars
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // TestD12bClojureAbuttingNonLeafBoundary is the non-leaf counterpart of the

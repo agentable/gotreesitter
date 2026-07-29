@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	ts "github.com/odvcencio/gotreesitter"
+	ts "github.com/agentable/gotreesitter"
 )
 
 func TestBashRetryFullParseOnChainedIfs(t *testing.T) {

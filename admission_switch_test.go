@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gts "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // These tests exercise the Phase-3 admission switch through the public API. They

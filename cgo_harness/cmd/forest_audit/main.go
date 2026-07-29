@@ -8,8 +8,8 @@ import (
 	"sort"
 	"strings"
 
-	cgoharness "github.com/odvcencio/gotreesitter/cgo_harness"
-	"github.com/odvcencio/gotreesitter/grammars"
+	cgoharness "github.com/agentable/gotreesitter/cgo_harness"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 func main() {

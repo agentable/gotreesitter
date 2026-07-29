@@ -3,7 +3,7 @@ package cgoharness
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestIsAcceptedFullSpanCleanGoTreeRejectsIncompleteAndErrorRoots(t *testing.T) {

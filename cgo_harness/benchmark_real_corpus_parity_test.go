@@ -13,9 +13,9 @@ import (
 	"testing"
 	"time"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/cgo_harness/internal/realcorpus"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/cgo_harness/internal/realcorpus"
+	"github.com/agentable/gotreesitter/grammars"
 	sitter "github.com/tree-sitter/go-tree-sitter"
 )
 

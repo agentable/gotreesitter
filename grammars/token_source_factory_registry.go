@@ -1,6 +1,6 @@
 package grammars
 
-import "github.com/odvcencio/gotreesitter"
+import "github.com/agentable/gotreesitter"
 
 var tokenSourceFactories = map[string]func(src []byte, lang *gotreesitter.Language) gotreesitter.TokenSource{}
 

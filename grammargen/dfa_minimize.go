@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 // lexMinimizeDisabledEnv is a rollback safety valve for minimizeLexStates.

@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"testing"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 var diagnosticParserCoreGoHighlightQueryForTest func() (string, error)

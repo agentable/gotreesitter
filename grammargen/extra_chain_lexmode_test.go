@@ -3,7 +3,7 @@ package grammargen
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func singleExtraShiftTarget(t *testing.T, ng *NormalizedGrammar, acts []lrAction) int {

@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestBuildConflictPolicyRejectsNonGeneratedRepetitionShift(t *testing.T) {

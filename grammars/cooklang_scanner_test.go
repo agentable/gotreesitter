@@ -4,7 +4,7 @@ import (
 	"testing"
 	_ "unsafe"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestCooklangExternalScannerEmitsZeroWidthNewline(t *testing.T) {
@@ -51,8 +51,8 @@ func TestCooklangParseProgressesAfterZeroWidthNewline(t *testing.T) {
 	}
 }
 
-//go:linkname newCooklangExternalLexer github.com/odvcencio/gotreesitter.newExternalLexer
+//go:linkname newCooklangExternalLexer github.com/agentable/gotreesitter.newExternalLexer
 func newCooklangExternalLexer(source []byte, pos int, row, col uint32) *gotreesitter.ExternalLexer
 
-//go:linkname cooklangExternalLexerToken github.com/odvcencio/gotreesitter.(*ExternalLexer).token
+//go:linkname cooklangExternalLexerToken github.com/agentable/gotreesitter.(*ExternalLexer).token
 func cooklangExternalLexerToken(*gotreesitter.ExternalLexer) (gotreesitter.Token, bool)

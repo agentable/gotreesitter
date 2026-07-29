@@ -8,7 +8,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 // parserCoreReplayParseStatesEnabled reports whether the compact route should

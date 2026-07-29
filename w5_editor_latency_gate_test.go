@@ -178,8 +178,8 @@ import (
 	"testing"
 	"time"
 
-	gts "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gts "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // w5SlowTier reports whether the ~1MB size tier should be included. Only

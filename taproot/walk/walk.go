@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	gts "github.com/odvcencio/gotreesitter"
+	gts "github.com/agentable/gotreesitter"
 )
 
 // ── Language cache ────────────────────────────────────────────────────────────

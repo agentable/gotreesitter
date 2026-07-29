@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 
-	core "github.com/odvcencio/gotreesitter/internal/parsercorephase0"
+	core "github.com/agentable/gotreesitter/internal/parsercorephase0"
 )
 
 // This file is the compact candidate route for the Phase-3 admission switch.

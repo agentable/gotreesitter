@@ -4,7 +4,7 @@ import (
 	"crypto/sha256"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestBuiltinExternalScannerRetryProfilesAttach(t *testing.T) {

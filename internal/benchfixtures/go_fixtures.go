@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"io"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 const (

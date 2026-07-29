@@ -70,8 +70,8 @@ import (
 	"testing"
 	"time"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 func issue380PointForOffset(src []byte, off int) gotreesitter.Point {

@@ -12,7 +12,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter/internal/benchfixtures"
+	"github.com/agentable/gotreesitter/internal/benchfixtures"
 )
 
 const (

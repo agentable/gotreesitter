@@ -5,7 +5,7 @@ package grammars
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // TestTomlScannerSymbolIDs guards the hardcoded external symbol ids in

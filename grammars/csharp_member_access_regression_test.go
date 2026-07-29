@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func findFirstNamedDescendantWhere(node *gotreesitter.Node, lang *gotreesitter.Language, typ string, pred func(*gotreesitter.Node) bool) *gotreesitter.Node {

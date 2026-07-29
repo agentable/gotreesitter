@@ -3,7 +3,7 @@
 package grammars
 
 import (
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // External token indexes must match the generated Python grammar ExternalSymbols order.

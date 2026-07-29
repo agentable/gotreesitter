@@ -5,8 +5,8 @@ package grammars
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/internal/benchfixtures"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/internal/benchfixtures"
 )
 
 type typeProjectionRetirementCase struct {

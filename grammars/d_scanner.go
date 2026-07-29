@@ -5,7 +5,7 @@ package grammars
 import (
 	"unicode"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // External token indexes for the D grammar (must match grammar.js externals).

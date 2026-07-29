@@ -7,7 +7,7 @@ import (
 	"testing"
 	_ "unsafe"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestFsharpKeywordDedentFallbackIgnoresEmptyIndentStack(t *testing.T) {
@@ -77,8 +77,8 @@ func TestFsharpScannerCheckpointMatchesLockedByteLayout(t *testing.T) {
 	}
 }
 
-//go:linkname newFsharpExternalLexer github.com/odvcencio/gotreesitter.newExternalLexer
+//go:linkname newFsharpExternalLexer github.com/agentable/gotreesitter.newExternalLexer
 func newFsharpExternalLexer(source []byte, pos int, row, col uint32) *gotreesitter.ExternalLexer
 
-//go:linkname fsharpExternalLexerToken github.com/odvcencio/gotreesitter.(*ExternalLexer).token
+//go:linkname fsharpExternalLexerToken github.com/agentable/gotreesitter.(*ExternalLexer).token
 func fsharpExternalLexerToken(*gotreesitter.ExternalLexer) (gotreesitter.Token, bool)

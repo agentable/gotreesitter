@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 func parseByLanguageName(t *testing.T, name, src string) (*gotreesitter.Tree, *gotreesitter.Language) {

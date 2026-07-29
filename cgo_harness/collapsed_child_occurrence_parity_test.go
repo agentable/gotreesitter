@@ -5,7 +5,7 @@ package cgoharness
 import (
 	"testing"
 
-	gts "github.com/odvcencio/gotreesitter"
+	gts "github.com/agentable/gotreesitter"
 	sitter "github.com/tree-sitter/go-tree-sitter"
 )
 

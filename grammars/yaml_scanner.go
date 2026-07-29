@@ -5,7 +5,7 @@ package grammars
 import (
 	"encoding/binary"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // YamlExternalScanner is a direct port of tree-sitter-yaml's C external

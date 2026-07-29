@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // LangResolver maps a language name to a tree-sitter Language object.

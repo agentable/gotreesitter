@@ -3,7 +3,7 @@ package grammargen
 import (
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // TestBuildFieldMapsDedupesSharedProductionIDs guards against a regression

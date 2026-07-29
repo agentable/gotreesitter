@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	sitter "github.com/tree-sitter/go-tree-sitter"
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 func dumpGoTree(n *gotreesitter.Node, lang *gotreesitter.Language, depth int) string {

@@ -11,7 +11,7 @@ import (
 
 	sitter "github.com/tree-sitter/go-tree-sitter"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // highlightCapture is a normalized capture for comparison between Go and C.

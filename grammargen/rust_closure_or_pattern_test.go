@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 func TestRustClosureOrPatternParity(t *testing.T) {

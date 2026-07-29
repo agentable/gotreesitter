@@ -1,6 +1,6 @@
 package cgoharness
 
-import gotreesitter "github.com/odvcencio/gotreesitter"
+import gotreesitter "github.com/agentable/gotreesitter"
 
 // IsAcceptedFullSpanCleanGoTree reports whether a successful Go parse produced
 // the corpus-policy clean result shared by perf_scan and parse_gap_report: the

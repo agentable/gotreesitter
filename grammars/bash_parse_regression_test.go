@@ -3,7 +3,7 @@ package grammars
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func bashMustParseNoError(t *testing.T, src []byte) (*gotreesitter.Tree, *gotreesitter.Language) {

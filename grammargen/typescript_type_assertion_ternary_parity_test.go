@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestTypeScriptTypeAssertionOverTernaryParity(t *testing.T) {

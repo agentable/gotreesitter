@@ -208,7 +208,7 @@ func TestReleaseDocumentFacts(t *testing.T) {
 			name: "missing changelog section",
 			mutate: func(input *validationInput) {
 				writeFile(t, filepath.Join(input.RepositoryRoot, "CHANGELOG.md"),
-					"[Unreleased]: https://github.com/odvcencio/gotreesitter/compare/v0.48.0...HEAD\n")
+					"[Unreleased]: https://github.com/agentable/gotreesitter/compare/v0.48.0...HEAD\n")
 			},
 			check: func(result validationResult) bool {
 				facts := result.PolicyFacts.Evidence
@@ -330,7 +330,7 @@ func plannedInput(t *testing.T, now time.Time) validationInput {
 		ReceiptURI:         "hypha://m31labs/gotreesitter/release/v0.48.0",
 		LatestTag:          "v0.47.0",
 		CIRunID:            "29892922471",
-		CIRunURL:           "https://github.com/odvcencio/gotreesitter/actions/runs/29892922471",
+		CIRunURL:           "https://github.com/agentable/gotreesitter/actions/runs/29892922471",
 		CIEvent:            "workflow_dispatch",
 		CISHA:              strings.Repeat("a", 40),
 		CIConclusion:       "success",
@@ -357,7 +357,7 @@ func urgentInput(t *testing.T, now time.Time) validationInput {
 		WhyWaitingIsWorse:  "Users receive incorrect parse results.",
 		LatestTag:          "v0.47.0",
 		CIRunID:            "29892922471",
-		CIRunURL:           "https://github.com/odvcencio/gotreesitter/actions/runs/29892922471",
+		CIRunURL:           "https://github.com/agentable/gotreesitter/actions/runs/29892922471",
 		CIEvent:            "workflow_dispatch",
 		CISHA:              strings.Repeat("b", 40),
 		CIConclusion:       "success",
@@ -378,8 +378,8 @@ func writeReleaseFiles(t *testing.T, root, version, date, previousTag, notes str
 	changelog := "# Changelog\n\n## [Unreleased]\n\n" +
 		"## [" + number + "] - " + date + "\n\n" + notes + "\n" +
 		"## [" + strings.TrimPrefix(previousTag, "v") + "] - 2026-07-23\n\n- Previous release.\n\n" +
-		"[Unreleased]: https://github.com/odvcencio/gotreesitter/compare/" + version + "...HEAD\n" +
-		"[" + number + "]: https://github.com/odvcencio/gotreesitter/compare/" + previousTag + "..." + version + "\n"
+		"[Unreleased]: https://github.com/agentable/gotreesitter/compare/" + version + "...HEAD\n" +
+		"[" + number + "]: https://github.com/agentable/gotreesitter/compare/" + previousTag + "..." + version + "\n"
 	writeFile(t, filepath.Join(root, "CHANGELOG.md"), changelog)
 	readme := "# gotreesitter\n\nThe current release is **" + version + "**.\n"
 	writeFile(t, filepath.Join(root, "README.md"), readme)

@@ -5,7 +5,7 @@ package grammars
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func godotResourceParseTree(t *testing.T, src string) (*gotreesitter.Tree, *gotreesitter.Language) {

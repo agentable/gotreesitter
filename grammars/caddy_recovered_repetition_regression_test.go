@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestCaddyRecoveredStringLiteralRepetitionStaysBounded(t *testing.T) {

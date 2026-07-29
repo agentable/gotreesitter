@@ -1,6 +1,6 @@
 package corpuscheck
 
-import gotreesitter "github.com/odvcencio/gotreesitter"
+import gotreesitter "github.com/agentable/gotreesitter"
 
 // RenderTree converts a live gotreesitter parse tree into the same
 // canonical SNode shape ParseExpected produces from a corpus fixture's

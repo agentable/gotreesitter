@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestAuthzedTokenSourceParsesSpiceDBSchemaBasic(t *testing.T) {

@@ -2,7 +2,7 @@
 
 package grammars
 
-import "github.com/odvcencio/gotreesitter"
+import "github.com/agentable/gotreesitter"
 
 // AdaLanguage returns the ada language definition.
 func AdaLanguage() *gotreesitter.Language {

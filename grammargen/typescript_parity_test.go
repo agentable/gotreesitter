@@ -3,7 +3,7 @@ package grammargen
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestTypeScriptGenericCallParity(t *testing.T) {

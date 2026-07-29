@@ -5,8 +5,8 @@ package main
 import (
 	"syscall/js"
 
-	"github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammargen"
+	"github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammargen"
 )
 
 func main() {

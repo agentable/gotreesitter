@@ -11,7 +11,7 @@ import (
 
 	sitter "github.com/tree-sitter/go-tree-sitter"
 
-	"github.com/odvcencio/gotreesitter/grammars"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // extToLanguage maps file extensions to tree-sitter language names.

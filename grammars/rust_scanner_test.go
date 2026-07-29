@@ -6,7 +6,7 @@ import (
 	"slices"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 func TestRustExternalScannerBindsExternalSymbolsPositionally(t *testing.T) {

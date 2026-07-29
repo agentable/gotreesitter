@@ -2,7 +2,7 @@
 
 package grammars
 
-import gotreesitter "github.com/odvcencio/gotreesitter"
+import gotreesitter "github.com/agentable/gotreesitter"
 
 // External token indexes for the HTML grammar.
 // These must match the order in the grammar's externals array.

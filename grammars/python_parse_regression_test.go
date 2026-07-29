@@ -3,7 +3,7 @@ package grammars
 import (
 	"testing"
 
-	"github.com/odvcencio/gotreesitter"
+	"github.com/agentable/gotreesitter"
 )
 
 func TestPythonComparisonOperatorFieldStaysOnOperatorToken(t *testing.T) {
@@ -54,7 +54,7 @@ func TestPythonComparisonOperatorFieldStaysOnOperatorToken(t *testing.T) {
 	}
 }
 
-// Regression test for https://github.com/odvcencio/gotreesitter/issues/53
+// Regression test for https://github.com/agentable/gotreesitter/issues/53
 //
 // An f-string in a decorator (e.g. @create_span(f"{__file__}.func")) causes
 // the scanner's insideInterpolatedString flag to become stale after checkpoint

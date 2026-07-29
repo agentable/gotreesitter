@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
+	gotreesitter "github.com/agentable/gotreesitter"
 )
 
 // TestWorkCountAdmissionChild is the ordinary, untagged admission endpoint.

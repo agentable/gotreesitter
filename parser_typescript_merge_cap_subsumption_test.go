@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
-	"github.com/odvcencio/gotreesitter/grammars"
+	gotreesitter "github.com/agentable/gotreesitter"
+	"github.com/agentable/gotreesitter/grammars"
 )
 
 // ironwoodParseNoFatal parses source with the named grammar and returns the
