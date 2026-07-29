@@ -63,6 +63,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractJavaImportNode(n, lang, source, &refs)
 		case "kotlin":
 			return extractKotlinImportNode(n, lang, source, &refs)
+		case "lua":
+			return extractLuaRequireNode(n, lang, source, &refs)
 		case "ruby":
 			return extractRubyRequireNode(n, lang, source, &refs)
 		case "php":
@@ -82,6 +84,38 @@ func ExtractImports(tree *Tree) []ImportRef {
 		}
 	})
 	return refs
+}
+
+func extractLuaRequireNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+	refs *[]ImportRef,
+) bool {
+	if n.Type(lang) != "function_call" {
+		return true
+	}
+	callee := firstDescendantByType(n, lang, "identifier")
+	if callee == nil || callee.Text(source) != "require" {
+		return true
+	}
+	argument := firstDescendantByType(n, lang, "string")
+	if argument == nil {
+		return false
+	}
+	path := importStringLiteralText(argument.Text(source))
+	if path == "" {
+		return false
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      lang.Name,
+		Kind:      "require",
+		Path:      path,
+		Name:      lastDottedName(path),
+		StartByte: n.StartByte(),
+		EndByte:   n.EndByte(),
+	})
+	return false
 }
 
 func extractPHPIncludeNode(

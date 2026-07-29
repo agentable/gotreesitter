@@ -233,6 +233,19 @@ include $dynamic;
 	assertImportRef(t, refs[1], "php", "require_once", "setup.php", "php", "")
 }
 
+func TestExtractImportsLua(t *testing.T) {
+	source := []byte(`
+local helper = require("pkg.helper")
+local dynamic = require(module_name)
+helper.leaf()
+`)
+	refs := extractImportsFromTree(t, grammars.LuaLanguage(), source)
+	if got, want := len(refs), 1; got != want {
+		t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+	}
+	assertImportRef(t, refs[0], "lua", "require", "pkg.helper", "helper", "")
+}
+
 func TestExtractImportsCAndCPP(t *testing.T) {
 	for _, filename := range []string{"main.c", "main.cpp"} {
 		t.Run(filename, func(t *testing.T) {
