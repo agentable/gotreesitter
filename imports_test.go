@@ -203,6 +203,22 @@ use crate::helper::{other, Worker as RenamedWorker};
 	assertImportRef(t, refs[3], "rust", "use", "crate::helper::Worker", "Worker", "RenamedWorker")
 }
 
+func TestExtractImportsRuby(t *testing.T) {
+	source := []byte(`require_relative "helper"
+require 'json'
+load "ignored.rb"
+`)
+	refs := extractImportsFromTree(t, grammars.RubyLanguage(), source)
+	if got, want := len(refs), 2; got != want {
+		t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+	}
+	assertImportRef(t, refs[0], "ruby", "require_relative", "helper", "helper", "")
+	if refs[0].Relative != 1 {
+		t.Fatalf("relative require = %#v, want Relative=1", refs[0])
+	}
+	assertImportRef(t, refs[1], "ruby", "require", "json", "json", "")
+}
+
 func TestExtractImportsCAndCPP(t *testing.T) {
 	for _, filename := range []string{"main.c", "main.cpp"} {
 		t.Run(filename, func(t *testing.T) {

@@ -36,6 +36,10 @@ var inferredTagsQueryOverrides = map[string]string{
 		"(function_declaration (simple_identifier) @name) @definition.function",
 		"(call_expression (simple_identifier) @name) @reference.call",
 	}, "\n"),
+	"ruby": strings.Join([]string{
+		"(program (method name: (identifier) @name) @definition.function)",
+		"(call method: (identifier) @name) @reference.call",
+	}, "\n"),
 }
 
 var inferredTagsQueryPatterns = []tagsQueryPattern{
