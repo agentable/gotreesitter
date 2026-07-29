@@ -129,6 +129,49 @@ function helper(): void {}
 	assertCallNames(t, calls, "helper")
 }
 
+func TestExtractExplicitInstantiations(t *testing.T) {
+	tests := []struct {
+		filename string
+		source   string
+		want     string
+	}{
+		{
+			filename: "main.go",
+			source:   "package main\ntype Worker struct{}\nvar _ = Worker{}\n",
+			want:     "Worker",
+		},
+		{
+			filename: "Main.java",
+			source:   "class Worker {}\nclass Main { Object run() { return new Worker(); } }\n",
+			want:     "Worker",
+		},
+		{
+			filename: "main.js",
+			source:   "class Worker {}\nconst worker = new Worker();\n",
+			want:     "Worker",
+		},
+		{
+			filename: "main.ts",
+			source:   "class Worker {}\nconst worker: Worker = new Worker();\n",
+			want:     "Worker",
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.filename, func(t *testing.T) {
+			source := []byte(test.source)
+			tree := parseUnderstandingTree(t, test.filename, source)
+			defer tree.Release()
+			refs := gotreesitter.ExtractInstantiations(tree)
+			if len(refs) != 1 ||
+				refs[0].Name != test.want ||
+				string(source[refs[0].NameStartByte:refs[0].NameEndByte]) != test.want ||
+				refs[0].StartByte >= refs[0].EndByte {
+				t.Fatalf("ExtractInstantiations = %#v, want %q", refs, test.want)
+			}
+		})
+	}
+}
+
 func parseUnderstandingTree(t *testing.T, filename string, source []byte) *gotreesitter.Tree {
 	t.Helper()
 	entry := grammars.DetectLanguage(filename)

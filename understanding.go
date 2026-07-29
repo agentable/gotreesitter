@@ -42,6 +42,18 @@ type HeritageRef struct {
 	ParentEndByte   uint32
 }
 
+// InstantiationRef is a compact language-neutral explicit construction site.
+type InstantiationRef struct {
+	Lang          string
+	Kind          string
+	Name          string
+	NodeType      string
+	StartByte     uint32
+	EndByte       uint32
+	NameStartByte uint32
+	NameEndByte   uint32
+}
+
 // ExtractDefinitionSpans returns language-neutral declaration spans for common
 // code-understanding workflows. The extractor is intentionally conservative:
 // unsupported languages or declaration shapes are skipped rather than guessed.
@@ -90,6 +102,25 @@ func ExtractHeritage(tree *Tree) []HeritageRef {
 	var refs []HeritageRef
 	walkTree(tree.RootNode(), lang, func(n *Node) bool {
 		appendHeritageForNode(n, lang, source, &refs)
+		return true
+	})
+	return refs
+}
+
+// ExtractInstantiations returns explicit construction syntax whose target name
+// is present in the tree. It does not attempt name binding or classify ordinary
+// calls as constructors.
+func ExtractInstantiations(tree *Tree) []InstantiationRef {
+	if tree == nil || tree.RootNode() == nil || tree.Language() == nil {
+		return nil
+	}
+	lang := tree.Language()
+	source := tree.Source()
+	var refs []InstantiationRef
+	walkTree(tree.RootNode(), lang, func(n *Node) bool {
+		if ref, ok := instantiationRefForNode(n, lang, source); ok {
+			refs = append(refs, ref)
+		}
 		return true
 	})
 	return refs
@@ -229,6 +260,64 @@ func callRefForNode(n *Node, lang *Language, source []byte) (CallRef, bool) {
 		NameStartByte: nameStart,
 		NameEndByte:   nameEnd,
 	}, true
+}
+
+func instantiationRefForNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+) (InstantiationRef, bool) {
+	if n == nil || lang == nil || !isInstantiationNode(lang.Name, n.Type(lang)) {
+		return InstantiationRef{}, false
+	}
+	target := instantiationTargetNode(n, lang)
+	name, _, nameStart, nameEnd := expressionName(target, lang, source)
+	if name == "" {
+		return InstantiationRef{}, false
+	}
+	return InstantiationRef{
+		Lang:          lang.Name,
+		Kind:          "instantiates",
+		Name:          name,
+		NodeType:      n.Type(lang),
+		StartByte:     n.StartByte(),
+		EndByte:       n.EndByte(),
+		NameStartByte: nameStart,
+		NameEndByte:   nameEnd,
+	}, true
+}
+
+func isInstantiationNode(langName, nodeType string) bool {
+	switch langName {
+	case "go":
+		return nodeType == "composite_literal"
+	case "java":
+		return nodeType == "object_creation_expression"
+	case "javascript", "typescript", "tsx":
+		return nodeType == "new_expression"
+	default:
+		return false
+	}
+}
+
+func instantiationTargetNode(n *Node, lang *Language) *Node {
+	for _, field := range []string{"type", "constructor"} {
+		if child := n.ChildByFieldName(field, lang); child != nil {
+			return child
+		}
+	}
+	for i := 0; i < n.NamedChildCount(); i++ {
+		child := n.NamedChild(i)
+		if child == nil {
+			continue
+		}
+		switch child.Type(lang) {
+		case "literal_value", "object", "arguments", "argument_list":
+			continue
+		}
+		return child
+	}
+	return nil
 }
 
 func isCallNode(langName, nodeType string) bool {
