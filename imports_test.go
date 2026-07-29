@@ -72,6 +72,38 @@ import static java.util.Collections.*;
 	assertImportRefsEqualShape(t, sourceRefs, refs)
 }
 
+func TestExtractImportsEcmascript(t *testing.T) {
+	tests := []struct {
+		name string
+		lang *gotreesitter.Language
+	}{
+		{name: "javascript", lang: grammars.JavascriptLanguage()},
+		{name: "typescript", lang: grammars.TypescriptLanguage()},
+	}
+	source := []byte(`import { leaf as renamed, plain } from "./helper";
+import * as helpers from "./helpers";
+import "./setup";
+`)
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			refs := extractImportsFromTree(t, test.lang, source)
+			if got, want := len(refs), 4; got != want {
+				t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+			}
+			assertImportRef(t, refs[0], test.name, "import", "./helper", "leaf", "renamed")
+			assertImportRef(t, refs[1], test.name, "import", "./helper", "plain", "")
+			assertImportRef(t, refs[2], test.name, "import", "./helpers", "*", "helpers")
+			if !refs[2].Static || !refs[2].Wildcard {
+				t.Fatalf("namespace ref = %#v, want static wildcard", refs[2])
+			}
+			assertImportRef(t, refs[3], test.name, "import", "./setup", "", "")
+			if !refs[3].Static {
+				t.Fatalf("side-effect ref = %#v, want static import", refs[3])
+			}
+		})
+	}
+}
+
 func TestExtractImportsPython(t *testing.T) {
 	source := []byte(`import os, sys as system
 from ..pkg.sub import name as alias, other

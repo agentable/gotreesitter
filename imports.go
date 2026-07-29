@@ -61,6 +61,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractGoImportNode(n, lang, source, &refs)
 		case "java":
 			return extractJavaImportNode(n, lang, source, &refs)
+		case "javascript", "typescript", "tsx":
+			return extractEcmascriptImportNode(n, lang, source, &refs)
 		case "python":
 			return extractPythonImportNode(n, lang, source, &refs)
 		case "starlark":
@@ -338,6 +340,78 @@ func javaImportRefFromText(lang *Language, text string, startByte, endByte uint3
 	ref.Path = text
 	ref.Name = lastDottedName(text)
 	return ref
+}
+
+func extractEcmascriptImportNode(n *Node, lang *Language, source []byte, refs *[]ImportRef) bool {
+	if n.Type(lang) != "import_statement" {
+		return true
+	}
+	pathNode := n.ChildByFieldName("source", lang)
+	if pathNode == nil {
+		pathNode = firstDescendantByType(n, lang, "string")
+	}
+	path := importStringLiteralText(pathNode.Text(source))
+	if path == "" {
+		return false
+	}
+	start := len(*refs)
+	for _, specifier := range collectDescendantsByType(n, lang, "import_specifier") {
+		name := nodeFieldText(specifier, "name", lang, source)
+		alias := nodeFieldText(specifier, "alias", lang, source)
+		if name == "" {
+			continue
+		}
+		*refs = append(*refs, ImportRef{
+			Lang:      lang.Name,
+			Kind:      "import",
+			Path:      path,
+			Name:      name,
+			Alias:     alias,
+			Static:    true,
+			StartByte: n.StartByte(),
+			EndByte:   n.EndByte(),
+		})
+	}
+	for _, namespace := range collectDescendantsByType(n, lang, "namespace_import") {
+		alias := strings.TrimSpace(strings.TrimPrefix(namespace.Text(source), "*"))
+		alias = strings.TrimSpace(strings.TrimPrefix(alias, "as"))
+		if alias == "" {
+			continue
+		}
+		*refs = append(*refs, ImportRef{
+			Lang:      lang.Name,
+			Kind:      "import",
+			Path:      path,
+			Name:      "*",
+			Alias:     alias,
+			Static:    true,
+			Wildcard:  true,
+			StartByte: n.StartByte(),
+			EndByte:   n.EndByte(),
+		})
+	}
+	if len(*refs) == start {
+		*refs = append(*refs, ImportRef{
+			Lang:      lang.Name,
+			Kind:      "import",
+			Path:      path,
+			Static:    true,
+			StartByte: n.StartByte(),
+			EndByte:   n.EndByte(),
+		})
+	}
+	return false
+}
+
+func nodeFieldText(node *Node, field string, lang *Language, source []byte) string {
+	if node == nil {
+		return ""
+	}
+	child := node.ChildByFieldName(field, lang)
+	if child == nil {
+		return ""
+	}
+	return strings.TrimSpace(child.Text(source))
 }
 
 func extractPythonImportNode(n *Node, lang *Language, source []byte, refs *[]ImportRef) bool {
