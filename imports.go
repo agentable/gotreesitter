@@ -69,11 +69,57 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractStarlarkImportNode(n, lang, source, &refs)
 		case "rust":
 			return extractRustImportNode(n, lang, source, &refs)
+		case "c", "cpp":
+			return extractCIncludeNode(n, lang, source, &refs)
 		default:
 			return true
 		}
 	})
 	return refs
+}
+
+func extractCIncludeNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+	refs *[]ImportRef,
+) bool {
+	if n.Type(lang) != "preproc_include" {
+		return true
+	}
+	text := strings.TrimSpace(n.Text(source))
+	path, system := cIncludePath(text)
+	if path == "" {
+		return false
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      lang.Name,
+		Kind:      "include",
+		Path:      path,
+		Name:      lastDottedName(path),
+		Static:    system,
+		StartByte: n.StartByte(),
+		EndByte:   n.EndByte(),
+	})
+	return false
+}
+
+func cIncludePath(declaration string) (string, bool) {
+	declaration = strings.TrimSpace(strings.TrimPrefix(declaration, "#include"))
+	if len(declaration) < 2 {
+		return "", false
+	}
+	switch declaration[0] {
+	case '"':
+		if end := strings.IndexByte(declaration[1:], '"'); end >= 0 {
+			return declaration[1 : end+1], false
+		}
+	case '<':
+		if end := strings.IndexByte(declaration[1:], '>'); end >= 0 {
+			return declaration[1 : end+1], true
+		}
+	}
+	return "", false
 }
 
 // ExtractImportsFromSource returns language-neutral dependency declarations

@@ -231,6 +231,19 @@ func definitionKind(langName, nodeType string) string {
 		case "enum_item", "trait_item", "type_item":
 			return "type"
 		}
+	case "c":
+		if nodeType == "function_definition" {
+			return "function"
+		}
+	case "cpp":
+		switch nodeType {
+		case "function_definition":
+			return "function"
+		case "class_specifier":
+			return "class"
+		case "struct_specifier", "enum_specifier", "type_definition":
+			return "type"
+		}
 	}
 	return ""
 }
@@ -343,6 +356,8 @@ func isCallNode(langName, nodeType string) bool {
 	case "python", "starlark":
 		return nodeType == "call"
 	case "rust":
+		return nodeType == "call_expression"
+	case "c", "cpp":
 		return nodeType == "call_expression"
 	}
 	return false

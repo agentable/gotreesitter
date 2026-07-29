@@ -182,6 +182,30 @@ use crate::helper::{other, Worker as RenamedWorker};
 	assertImportRef(t, refs[3], "rust", "use", "crate::helper::Worker", "Worker", "RenamedWorker")
 }
 
+func TestExtractImportsCAndCPP(t *testing.T) {
+	for _, filename := range []string{"main.c", "main.cpp"} {
+		t.Run(filename, func(t *testing.T) {
+			source := []byte("#include \"helper.h\"\n#include <stdio.h>\n")
+			tree := parseUnderstandingTree(t, filename, source)
+			defer tree.Release()
+			refs := gotreesitter.ExtractImports(tree)
+			if len(refs) != 2 {
+				t.Fatalf("ExtractImports len = %d, want 2: %#v", len(refs), refs)
+			}
+			if refs[0].Kind != "include" ||
+				refs[0].Path != "helper.h" ||
+				refs[0].Static {
+				t.Fatalf("local include = %#v", refs[0])
+			}
+			if refs[1].Kind != "include" ||
+				refs[1].Path != "stdio.h" ||
+				!refs[1].Static {
+				t.Fatalf("system include = %#v", refs[1])
+			}
+		})
+	}
+}
+
 func TestExtractImportsSourceParityFixtures(t *testing.T) {
 	cases := []struct {
 		name   string

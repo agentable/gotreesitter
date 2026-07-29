@@ -149,6 +149,35 @@ pub fn run() {
 	assertCallNames(t, calls, "leaf", "leaf")
 }
 
+func TestExtractDefinitionSpansAndCallsC(t *testing.T) {
+	source := []byte(`int leaf(void) { return 1; }
+int run(void) { return leaf(); }
+`)
+	tree := parseUnderstandingTree(t, "main.c", source)
+	defer tree.Release()
+
+	defs := gotreesitter.ExtractDefinitionSpans(tree)
+	assertDefinitionNames(t, defs, "leaf", "run")
+
+	calls := gotreesitter.ExtractCalls(tree)
+	assertCallNames(t, calls, "leaf")
+}
+
+func TestExtractDefinitionSpansAndCallsCPP(t *testing.T) {
+	source := []byte(`class Worker {};
+int leaf() { return 1; }
+int run() { return leaf(); }
+`)
+	tree := parseUnderstandingTree(t, "main.cpp", source)
+	defer tree.Release()
+
+	defs := gotreesitter.ExtractDefinitionSpans(tree)
+	assertDefinitionNames(t, defs, "Worker", "leaf", "run")
+
+	calls := gotreesitter.ExtractCalls(tree)
+	assertCallNames(t, calls, "leaf")
+}
+
 func TestExtractExplicitInstantiations(t *testing.T) {
 	tests := []struct {
 		filename string
