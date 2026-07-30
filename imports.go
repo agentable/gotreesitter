@@ -70,6 +70,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractSolidityImportNode(n, lang, source, &refs)
 		case "nim":
 			return extractNimImportNode(n, lang, source, &refs)
+		case "odin":
+			return extractOdinImportNode(n, lang, source, &refs)
 		case "ruby":
 			return extractRubyRequireNode(n, lang, source, &refs)
 		case "php":
@@ -89,6 +91,40 @@ func ExtractImports(tree *Tree) []ImportRef {
 		}
 	})
 	return refs
+}
+
+func extractOdinImportNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+	refs *[]ImportRef,
+) bool {
+	if n.Type(lang) != "import_declaration" {
+		return true
+	}
+	pathNode := firstDescendantByType(n, lang, "string")
+	if pathNode == nil {
+		return false
+	}
+	path := importStringLiteralText(pathNode.Text(source))
+	if path == "" {
+		return false
+	}
+	alias := nodeFieldText(n, "alias", lang, source)
+	name := alias
+	if name == "" {
+		name = pathpkg.Base(path)
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      lang.Name,
+		Kind:      "import",
+		Path:      path,
+		Name:      name,
+		Alias:     alias,
+		StartByte: n.StartByte(),
+		EndByte:   n.EndByte(),
+	})
+	return false
 }
 
 func extractNimImportNode(

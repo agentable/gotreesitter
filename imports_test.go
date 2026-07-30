@@ -280,6 +280,15 @@ func TestExtractImportsNim(t *testing.T) {
 	assertImportRef(t, refs[0], "nim", "import", "helper", "helper", "")
 }
 
+func TestExtractImportsOdin(t *testing.T) {
+	source := []byte("package benchmark\n\nimport helper \"../helper\"\n")
+	refs := extractImportsFromTree(t, grammars.OdinLanguage(), source)
+	if len(refs) != 1 {
+		t.Fatalf("ExtractImports len = %d, want 1: %#v", len(refs), refs)
+	}
+	assertImportRef(t, refs[0], "odin", "import", "../helper", "helper", "helper")
+}
+
 func TestExtractImportsCAndCPP(t *testing.T) {
 	for _, filename := range []string{"main.c", "main.cpp"} {
 		t.Run(filename, func(t *testing.T) {

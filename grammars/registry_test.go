@@ -840,6 +840,29 @@ func TestNimTagsQueryCapturesTopLevelFunctionsAndCalls(t *testing.T) {
 	}
 }
 
+func TestOdinTagsQueryCapturesTopLevelProceduresAndCalls(t *testing.T) {
+	entry := DetectLanguageByName("odin")
+	if entry == nil {
+		t.Fatal("DetectLanguageByName(odin) = nil")
+	}
+	query := ResolveTagsQuery(*entry)
+	for _, needle := range []string{"procedure_declaration", "@definition.function", "@reference.call"} {
+		if !strings.Contains(query, needle) {
+			t.Fatalf("Odin tags query missing %q: %s", needle, query)
+		}
+	}
+
+	source := []byte("package benchmark\n\nBenchmarkOdinLeaf :: proc() -> string {\n  return \"leaf\"\n}\n\nBenchmarkOdinRun :: proc() -> string {\n  return BenchmarkOdinLeaf()\n}\n")
+	tagger, err := gotreesitter.NewTagger(entry.Language(), query)
+	if err != nil {
+		t.Fatalf("NewTagger(Odin): %v", err)
+	}
+	tags := tagger.Tag(source)
+	if got, want := len(tags), 3; got != want {
+		t.Fatalf("Odin tag count = %d, want %d: %#v", got, want, tags)
+	}
+}
+
 func TestDetectLanguageByShebangComprehensive(t *testing.T) {
 	tests := []struct {
 		line     string
