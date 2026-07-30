@@ -21,10 +21,14 @@ var inferredTagsQueryOverrides = map[string]string{
 		"(call_expression function: (identifier) @name) @reference.call",
 	}, "\n"),
 	"cpp": strings.Join([]string{
+		"(class_specifier name: (type_identifier) @name) @definition.class",
 		"(function_definition declarator: (function_declarator declarator: (identifier) @name)) @definition.function",
 		"(function_definition declarator: (pointer_declarator declarator: (function_declarator declarator: (identifier) @name))) @definition.function",
+		"(function_definition declarator: (function_declarator declarator: (field_identifier) @name)) @definition.method",
+		"(function_definition declarator: (pointer_declarator declarator: (function_declarator declarator: (field_identifier) @name))) @definition.method",
 		"(call_expression function: (identifier) @name) @reference.call",
 		"(call_expression function: (qualified_identifier scope: (namespace_identifier) name: (identifier) @name)) @reference.call",
+		"(call_expression function: (field_expression field: (field_identifier) @name)) @reference.call",
 	}, "\n"),
 	"objc": strings.Join([]string{
 		"(function_definition declarator: (function_declarator declarator: (identifier) @name)) @definition.function",
