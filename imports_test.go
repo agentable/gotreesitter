@@ -295,6 +295,24 @@ func TestExtractImportsCAndCPP(t *testing.T) {
 	}
 }
 
+func TestExtractImportsObjectiveC(t *testing.T) {
+	source := []byte("#import \"Helper.h\"\n#include \"Shared.h\"\n")
+	tree, err := gotreesitter.NewParser(grammars.ObjcLanguage()).Parse(source)
+	if err != nil {
+		t.Fatalf("parse Objective-C imports: %v", err)
+	}
+	defer tree.Release()
+	refs := gotreesitter.ExtractImports(tree)
+	if got, want := len(refs), 2; got != want {
+		t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+	}
+	assertImportRef(t, refs[0], "objc", "include", "Helper.h", "Helper", "")
+	if refs[0].Static {
+		t.Fatalf("local import = %#v, want Static false", refs[0])
+	}
+	assertImportRef(t, refs[1], "objc", "include", "Shared.h", "Shared", "")
+}
+
 func TestExtractImportsSourceParityFixtures(t *testing.T) {
 	cases := []struct {
 		name   string

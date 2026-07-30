@@ -80,7 +80,7 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractStarlarkImportNode(n, lang, source, &refs)
 		case "rust":
 			return extractRustImportNode(n, lang, source, &refs)
-		case "c", "cpp":
+		case "c", "cpp", "objc":
 			return extractCIncludeNode(n, lang, source, &refs)
 		default:
 			return true
@@ -293,7 +293,7 @@ func extractCIncludeNode(
 		Lang:      lang.Name,
 		Kind:      "include",
 		Path:      path,
-		Name:      lastDottedName(path),
+		Name:      strings.TrimSuffix(pathpkg.Base(path), pathpkg.Ext(path)),
 		Static:    system,
 		StartByte: n.StartByte(),
 		EndByte:   n.EndByte(),
@@ -302,7 +302,15 @@ func extractCIncludeNode(
 }
 
 func cIncludePath(declaration string) (string, bool) {
-	declaration = strings.TrimSpace(strings.TrimPrefix(declaration, "#include"))
+	declaration = strings.TrimSpace(declaration)
+	switch {
+	case strings.HasPrefix(declaration, "#include"):
+		declaration = strings.TrimSpace(strings.TrimPrefix(declaration, "#include"))
+	case strings.HasPrefix(declaration, "#import"):
+		declaration = strings.TrimSpace(strings.TrimPrefix(declaration, "#import"))
+	default:
+		return "", false
+	}
 	if len(declaration) < 2 {
 		return "", false
 	}
