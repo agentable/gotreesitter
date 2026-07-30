@@ -259,6 +259,18 @@ helper.leaf()
 	assertImportRef(t, refs[0], "luau", "require", "pkg.helper", "helper", "")
 }
 
+func TestExtractImportsSolidity(t *testing.T) {
+	source := []byte(`import {Helper} from "./Helper.sol";
+import "./SideEffect.sol";
+`)
+	refs := extractImportsFromTree(t, grammars.SolidityLanguage(), source)
+	if got, want := len(refs), 2; got != want {
+		t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+	}
+	assertImportRef(t, refs[0], "solidity", "import", "./Helper.sol", "Helper", "")
+	assertImportRef(t, refs[1], "solidity", "import", "./SideEffect.sol", "SideEffect", "")
+}
+
 func TestExtractImportsCAndCPP(t *testing.T) {
 	for _, filename := range []string{"main.c", "main.cpp"} {
 		t.Run(filename, func(t *testing.T) {

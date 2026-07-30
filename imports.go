@@ -3,6 +3,7 @@ package gotreesitter
 import (
 	goparser "go/parser"
 	gotoken "go/token"
+	pathpkg "path"
 	"strconv"
 	"strings"
 )
@@ -65,6 +66,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractKotlinImportNode(n, lang, source, &refs)
 		case "lua", "luau":
 			return extractLuaRequireNode(n, lang, source, &refs)
+		case "solidity":
+			return extractSolidityImportNode(n, lang, source, &refs)
 		case "ruby":
 			return extractRubyRequireNode(n, lang, source, &refs)
 		case "php":
@@ -84,6 +87,41 @@ func ExtractImports(tree *Tree) []ImportRef {
 		}
 	})
 	return refs
+}
+
+func extractSolidityImportNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+	refs *[]ImportRef,
+) bool {
+	if n.Type(lang) != "import_directive" {
+		return true
+	}
+	pathNode := firstDescendantByType(n, lang, "string")
+	if pathNode == nil {
+		return false
+	}
+	path := importStringLiteralText(pathNode.Text(source))
+	if path == "" {
+		return false
+	}
+	name := ""
+	if identifier := firstDescendantByType(n, lang, "identifier"); identifier != nil {
+		name = identifier.Text(source)
+	}
+	if name == "" {
+		name = strings.TrimSuffix(pathpkg.Base(path), pathpkg.Ext(path))
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      lang.Name,
+		Kind:      "import",
+		Path:      path,
+		Name:      name,
+		StartByte: n.StartByte(),
+		EndByte:   n.EndByte(),
+	})
+	return false
 }
 
 func extractLuaRequireNode(
