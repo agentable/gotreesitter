@@ -817,6 +817,29 @@ func TestObjectiveCTagsQueryKeepsConservativeCSubset(t *testing.T) {
 	}
 }
 
+func TestNimTagsQueryCapturesTopLevelFunctionsAndCalls(t *testing.T) {
+	entry := DetectLanguageByName("nim")
+	if entry == nil {
+		t.Fatal("DetectLanguageByName(nim) = nil")
+	}
+	query := ResolveTagsQuery(*entry)
+	for _, needle := range []string{"proc_declaration", "func_declaration", "@definition.function", "@reference.call"} {
+		if !strings.Contains(query, needle) {
+			t.Fatalf("Nim tags query missing %q: %s", needle, query)
+		}
+	}
+
+	source := []byte("proc BenchmarkNimLeaf*(): string =\n  \"leaf\"\n\nproc BenchmarkNimRun*(): string =\n  BenchmarkNimLeaf()\n")
+	tagger, err := gotreesitter.NewTagger(entry.Language(), query)
+	if err != nil {
+		t.Fatalf("NewTagger(Nim): %v", err)
+	}
+	tags := tagger.Tag(source)
+	if got, want := len(tags), 3; got != want {
+		t.Fatalf("Nim tag count = %d, want %d: %#v", got, want, tags)
+	}
+}
+
 func TestDetectLanguageByShebangComprehensive(t *testing.T) {
 	tests := []struct {
 		line     string

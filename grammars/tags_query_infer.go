@@ -45,6 +45,13 @@ var inferredTagsQueryOverrides = map[string]string{
 		"(function_declaration (identifier) @name) @definition.function",
 		"(function_call (identifier) @name) @reference.call",
 	}, "\n"),
+	"nim": strings.Join([]string{
+		"(proc_declaration name: (exported_symbol (identifier) @name)) @definition.function",
+		"(proc_declaration name: (identifier) @name) @definition.function",
+		"(func_declaration name: (exported_symbol (identifier) @name)) @definition.function",
+		"(func_declaration name: (identifier) @name) @definition.function",
+		"(call function: (identifier) @name) @reference.call",
+	}, "\n"),
 	"ruby": strings.Join([]string{
 		"(program (method name: (identifier) @name) @definition.function)",
 		"(call method: (identifier) @name) @reference.call",

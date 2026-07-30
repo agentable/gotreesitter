@@ -68,6 +68,8 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractLuaRequireNode(n, lang, source, &refs)
 		case "solidity":
 			return extractSolidityImportNode(n, lang, source, &refs)
+		case "nim":
+			return extractNimImportNode(n, lang, source, &refs)
 		case "ruby":
 			return extractRubyRequireNode(n, lang, source, &refs)
 		case "php":
@@ -87,6 +89,34 @@ func ExtractImports(tree *Tree) []ImportRef {
 		}
 	})
 	return refs
+}
+
+func extractNimImportNode(
+	n *Node,
+	lang *Language,
+	source []byte,
+	refs *[]ImportRef,
+) bool {
+	if n.Type(lang) != "import_statement" {
+		return true
+	}
+	pathNode := firstDescendantByType(n, lang, "identifier")
+	if pathNode == nil {
+		return false
+	}
+	path := strings.TrimSpace(pathNode.Text(source))
+	if path == "" {
+		return false
+	}
+	*refs = append(*refs, ImportRef{
+		Lang:      lang.Name,
+		Kind:      "import",
+		Path:      path,
+		Name:      lastDottedName(path),
+		StartByte: n.StartByte(),
+		EndByte:   n.EndByte(),
+	})
+	return false
 }
 
 func extractSolidityImportNode(
