@@ -402,6 +402,7 @@ func objectiveCSource(source []byte) bool {
 		[]byte("@interface"),
 		[]byte("@implementation"),
 		[]byte("@protocol"),
+		[]byte("@class"),
 		[]byte("@autoreleasepool"),
 	} {
 		if bytes.Contains(source, marker) {

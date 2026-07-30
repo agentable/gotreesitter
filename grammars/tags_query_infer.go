@@ -25,6 +25,11 @@ var inferredTagsQueryOverrides = map[string]string{
 		"(function_definition declarator: (pointer_declarator declarator: (function_declarator declarator: (identifier) @name))) @definition.function",
 		"(call_expression function: (identifier) @name) @reference.call",
 	}, "\n"),
+	"objc": strings.Join([]string{
+		"(function_definition declarator: (function_declarator declarator: (identifier) @name)) @definition.function",
+		"(function_definition declarator: (pointer_declarator declarator: (function_declarator declarator: (identifier) @name))) @definition.function",
+		"(call_expression function: (identifier) @name) @reference.call",
+	}, "\n"),
 	"go": strings.Join([]string{
 		"(function_declaration name: (identifier) @name) @definition.function",
 		"(method_declaration name: (field_identifier) @name) @definition.method",

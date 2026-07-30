@@ -801,6 +801,22 @@ func TestDetectLanguageWithSourceDisambiguatesObjectiveC(t *testing.T) {
 	}
 }
 
+func TestObjectiveCTagsQueryKeepsConservativeCSubset(t *testing.T) {
+	entry := DetectLanguageByName("objc")
+	if entry == nil {
+		t.Fatal("DetectLanguageByName(objc) = nil")
+	}
+	query := ResolveTagsQuery(*entry)
+	for _, needle := range []string{"@definition.function", "@reference.call"} {
+		if !strings.Contains(query, needle) {
+			t.Fatalf("Objective-C tags query missing %q: %s", needle, query)
+		}
+	}
+	if strings.Contains(query, "@definition.method") {
+		t.Fatalf("Objective-C tags query claims method definitions: %s", query)
+	}
+}
+
 func TestDetectLanguageByShebangComprehensive(t *testing.T) {
 	tests := []struct {
 		line     string
