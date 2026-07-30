@@ -69,6 +69,12 @@ var inferredTagsQueryOverrides = map[string]string{
 		"(function_definition name: (name) @name) @definition.function",
 		"(function_call_expression function: (name) @name) @reference.call",
 	}, "\n"),
+	"python": strings.Join([]string{
+		"(function_definition name: (identifier) @name) @definition.function",
+		"(class_definition name: (identifier) @name) @definition.class",
+		"(call function: (identifier) @name) @reference.call",
+		"(call function: (attribute attribute: (identifier) @name)) @reference.call",
+	}, "\n"),
 }
 
 var inferredTagsQueryPatterns = []tagsQueryPattern{

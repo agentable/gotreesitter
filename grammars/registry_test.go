@@ -419,6 +419,42 @@ fun BenchmarkKotlinRun() = BenchmarkKotlinLeaf()
 	}
 }
 
+func TestInferredPythonTagsQueryCapturesOnlyCallableName(t *testing.T) {
+	entry := DetectLanguageByName("python")
+	if entry == nil {
+		t.Fatal("expected Python language entry")
+	}
+	tagger, err := gotreesitter.NewTagger(entry.Language(), ResolveTagsQuery(*entry))
+	if err != nil {
+		t.Fatalf("NewTagger: %v", err)
+	}
+	tags := tagger.Tag([]byte(`
+class Helper:
+    def leaf(self):
+        return "leaf"
+
+def run(helper: Helper):
+    return helper.leaf()
+`))
+	var definitions, calls []string
+	for _, tag := range tags {
+		switch tag.Kind {
+		case "definition.function":
+			definitions = append(definitions, tag.Name)
+		case "definition.class":
+			definitions = append(definitions, tag.Name)
+		case "reference.call":
+			calls = append(calls, tag.Name)
+		}
+	}
+	if got, want := strings.Join(definitions, ","), "Helper,leaf,run"; got != want {
+		t.Fatalf("definition names = %q, want %q; tags=%+v", got, want, tags)
+	}
+	if got, want := strings.Join(calls, ","), "leaf"; got != want {
+		t.Fatalf("reference.call names = %q, want %q; tags=%+v", got, want, tags)
+	}
+}
+
 func TestInferredRubyTagsQueryCapturesTopLevelFunctionsAndCalls(t *testing.T) {
 	entry := DetectLanguageByName("ruby")
 	if entry == nil {
