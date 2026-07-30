@@ -622,6 +622,60 @@ const char *run() {
 	}
 }
 
+func TestInferredCPPTagsQueryCapturesQualifiedNamespaceCall(t *testing.T) {
+	entry := DetectLanguageByName("cpp")
+	if entry == nil {
+		t.Fatal("expected C++ language entry")
+	}
+	query := ResolveTagsQuery(*entry)
+	tagger, err := gotreesitter.NewTagger(entry.Language(), query)
+	if err != nil {
+		t.Fatalf("NewTagger: %v", err)
+	}
+	source := []byte(`namespace helper {
+const char *leaf() {
+	return "leaf";
+}
+}
+
+const char *run() {
+	return helper::leaf();
+}
+`)
+	parser := gotreesitter.NewParser(entry.Language())
+	tree, err := parser.ParseWithTokenSource(
+		source,
+		entry.TokenSourceFactory(source, entry.Language()),
+	)
+	if err != nil {
+		t.Fatalf("ParseWithTokenSource: %v", err)
+	}
+	defer tree.Release()
+
+	tags := tagger.TagTree(tree)
+	var definitions, calls []string
+	for _, tag := range tags {
+		switch tag.Kind {
+		case "definition.function":
+			definitions = append(definitions, tag.Name)
+		case "reference.call":
+			calls = append(calls, tag.Name)
+		}
+	}
+	if got, want := strings.Join(definitions, ","), "leaf,run"; got != want {
+		t.Fatalf(
+			"definition.function names = %q, want %q; tags=%+v; tree=%s",
+			got, want, tags, tree.RootNode().SExpr(entry.Language()),
+		)
+	}
+	if got, want := strings.Join(calls, ","), "leaf"; got != want {
+		t.Fatalf(
+			"reference.call names = %q, want %q; tags=%+v; tree=%s",
+			got, want, tags, tree.RootNode().SExpr(entry.Language()),
+		)
+	}
+}
+
 func TestDetectLanguageByName(t *testing.T) {
 	tests := []struct {
 		input    string
