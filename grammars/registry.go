@@ -7,6 +7,7 @@
 package grammars
 
 import (
+	"bytes"
 	"path"
 	"strings"
 	"sync"
@@ -381,6 +382,33 @@ func DetectLanguage(filename string) *LangEntry {
 	}
 
 	return nil
+}
+
+// DetectLanguageWithSource resolves extension collisions using strong source
+// markers before falling back to DetectLanguage. The source-aware path is
+// intentionally narrow: .m is shared by MATLAB, Objective-C, and Wolfram
+// Language, while Objective-C has unambiguous directive and declaration
+// markers.
+func DetectLanguageWithSource(filename string, source []byte) *LangEntry {
+	if strings.EqualFold(path.Ext(filename), ".m") && objectiveCSource(source) {
+		return DetectLanguageByName("objc")
+	}
+	return DetectLanguage(filename)
+}
+
+func objectiveCSource(source []byte) bool {
+	for _, marker := range [][]byte{
+		[]byte("#import"),
+		[]byte("@interface"),
+		[]byte("@implementation"),
+		[]byte("@protocol"),
+		[]byte("@autoreleasepool"),
+	} {
+		if bytes.Contains(source, marker) {
+			return true
+		}
+	}
+	return false
 }
 
 // DetectLanguageByShebang checks the first line of content for shebang matches.

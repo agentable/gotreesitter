@@ -789,6 +789,18 @@ func TestDetectLanguageFilename(t *testing.T) {
 	}
 }
 
+func TestDetectLanguageWithSourceDisambiguatesObjectiveC(t *testing.T) {
+	entry := DetectLanguageWithSource("main.m", []byte("#import \"Helper.h\"\n"))
+	if entry == nil || entry.Name != "objc" {
+		t.Fatalf("DetectLanguageWithSource(Objective-C) = %#v, want objc", entry)
+	}
+
+	entry = DetectLanguageWithSource("matrix.m", []byte("function y = twice(x)\n  y = x * 2;\nend\n"))
+	if entry == nil || entry.Name != "matlab" {
+		t.Fatalf("DetectLanguageWithSource(MATLAB) = %#v, want matlab fallback", entry)
+	}
+}
+
 func TestDetectLanguageByShebangComprehensive(t *testing.T) {
 	tests := []struct {
 		line     string
