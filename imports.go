@@ -63,7 +63,7 @@ func ExtractImports(tree *Tree) []ImportRef {
 			return extractJavaImportNode(n, lang, source, &refs)
 		case "kotlin":
 			return extractKotlinImportNode(n, lang, source, &refs)
-		case "lua":
+		case "lua", "luau":
 			return extractLuaRequireNode(n, lang, source, &refs)
 		case "ruby":
 			return extractRubyRequireNode(n, lang, source, &refs)

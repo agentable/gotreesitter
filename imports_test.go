@@ -246,6 +246,19 @@ helper.leaf()
 	assertImportRef(t, refs[0], "lua", "require", "pkg.helper", "helper", "")
 }
 
+func TestExtractImportsLuau(t *testing.T) {
+	source := []byte(`
+local helper = require("pkg.helper")
+local dynamic = require(module_name)
+helper.leaf()
+`)
+	refs := extractImportsFromTree(t, grammars.LuauLanguage(), source)
+	if got, want := len(refs), 1; got != want {
+		t.Fatalf("ExtractImports len = %d, want %d: %#v", got, want, refs)
+	}
+	assertImportRef(t, refs[0], "luau", "require", "pkg.helper", "helper", "")
+}
+
 func TestExtractImportsCAndCPP(t *testing.T) {
 	for _, filename := range []string{"main.c", "main.cpp"} {
 		t.Run(filename, func(t *testing.T) {
