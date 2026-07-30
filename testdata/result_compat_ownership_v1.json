@@ -2,8 +2,8 @@
   "schema": "gotreesitter/result-compat-ownership/v1",
   "source_of_truth": true,
   "denominator": {
-    "dispatcher_arms": 59,
-    "dispatcher_languages": 61,
+    "dispatcher_arms": 60,
+    "dispatcher_languages": 62,
     "dispatcher_predicates": 1,
     "generic_passes": 0,
     "post_finalization_arms": 0,
@@ -951,6 +951,34 @@
         "cgo_harness/parity_cgo_test.go"
       ],
       "retirement_condition": "Delete only after derivation_election_selection emits the same tree natively for every registered witness and production, compact, forest, incremental, and C-oracle route receipts are exact.",
+      "route_coverage": {
+        "production": "shared_result_compatibility_tail",
+        "compact": "shared_result_compatibility_tail",
+        "forest": "shared_result_compatibility_tail",
+        "incremental": "shared_result_compatibility_tail",
+        "c_oracle": "curated_single_grammar_parity"
+      },
+      "status": "live",
+      "receipt_refs": []
+    },
+    {
+      "id": "dispatch.groovy",
+      "kind": "dispatcher_arm",
+      "functions": [
+        "normalizeGroovyCompatibility"
+      ],
+      "files": [
+        "parser_result_groovy.go"
+      ],
+      "languages": [
+        "groovy"
+      ],
+      "purpose": "Reconcile the Groovy derivation that splits an uppercase method name across a declaration and a call.",
+      "authoritative_owner": "derivation_election_selection",
+      "witnesses": [
+        "parser_result_groovy_real_test.go"
+      ],
+      "retirement_condition": "Delete only after derivation_election_selection emits the same function tree natively for the witness on all result routes.",
       "route_coverage": {
         "production": "shared_result_compatibility_tail",
         "compact": "shared_result_compatibility_tail",
