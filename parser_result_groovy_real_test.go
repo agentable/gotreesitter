@@ -42,6 +42,29 @@ func TestGroovyUppercaseMethodCompatibilityRealParser(t *testing.T) {
 	}
 }
 
+func TestGroovyUppercaseParameterizedMethodCompatibilityRealParser(t *testing.T) {
+	lang := grammars.GroovyLanguage()
+	source := []byte(`class Main { static String Shadowed(Helper) { Helper.Leaf() } }`)
+	tree, err := gotreesitter.NewParser(lang).Parse(source)
+	if err != nil {
+		t.Fatalf("Parse returned error: %v", err)
+	}
+	if tree == nil || tree.RootNode() == nil {
+		t.Fatal("Parse returned a nil tree")
+	}
+	defer tree.Release()
+
+	method := findGroovyNodeByText(tree.RootNode(), lang, source, "function_definition", `static String Shadowed(Helper) { Helper.Leaf() }`)
+	if method == nil {
+		t.Fatalf("function_definition not found:\n%s", tree.RootNode().SExpr(lang))
+	}
+	parameters := method.ChildByFieldName("parameters", lang)
+	if parameters == nil || parameters.Type(lang) != "parameter_list" ||
+		string(source[parameters.StartByte():parameters.EndByte()]) != "(Helper)" {
+		t.Fatalf("parameters field is not the expected parameter_list:\n%s", tree.RootNode().SExpr(lang))
+	}
+}
+
 func findGroovyNodeByText(
 	node *gotreesitter.Node,
 	lang *gotreesitter.Language,
